@@ -10,7 +10,7 @@ sealed trait EnvelopeStructure
 object EnvelopeStructure {
   case class Envelope(date: DateTime, subject: String, from: Address, sender: Address, replyTo: Address, to: Address, cc: Option[Address], bcc: Option[Address], inReplyTo: String, messageId: String) extends EnvelopeStructure
 
-  case class Address(personalName: String, sourceRoute: Option[String], mailboxName: String, hostName: String) extends EnvelopeStructure
+  case class Address(personalName: Option[String], sourceRoute: Option[String], mailboxName: String, hostName: String) extends EnvelopeStructure
 }
 
 class EnvelopeParser(val input: ParserInput) extends Parser with WhitespaceRules with StringBuilding with AutomaticWhitespaceHandling {
@@ -22,7 +22,7 @@ class EnvelopeParser(val input: ParserInput) extends Parser with WhitespaceRules
   def Subject = rule { QuotedText }
 
   def OptionalAddressStructure = rule { ("NIL" ~ push(None)) | (AddressStructure ~> ((x: Address) => Some(x))) }
-  def AddressStructure = rule { "((" ~ QuotedText ~ OptionalQuotedText ~ QuotedText ~ QuotedText ~ "))" ~> Address }
+  def AddressStructure = rule { "((" ~ OptionalQuotedText ~ OptionalQuotedText ~ QuotedText ~ QuotedText ~ "))" ~> Address }
   
   def OptionalQuotedText = rule { ("NIL" ~ push(None)) | (QuotedText ~> ((x: String) => Some(x))) }
   def QuotedText = rule { '"' ~ clearSB() ~ oneOrMore(noneOf("\"")) ~ '"' ~ WS ~ push(sb.toString()) }
