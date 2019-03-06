@@ -4,6 +4,8 @@ import org.parboiled2._
 import scala.util._
 import org.joda.time.DateTime
 
+import javax.mail.internet.MimeUtility
+
 
 // https://tools.ietf.org/html/rfc3501#section-7.4.2
 sealed trait EnvelopeStructure
@@ -22,10 +24,19 @@ class EnvelopeParser(val input: ParserInput) extends Parser with WhitespaceRules
   def Subject = rule { QuotedText }
 
   def OptionalAddressStructure = rule { ("NIL" ~ push(None)) | (AddressStructure ~> ((x: Address) => Some(x))) }
-  def AddressStructure = rule { "((" ~ OptionalQuotedText ~ OptionalQuotedText ~ QuotedText ~ QuotedText ~ "))" ~> Address }
+  def AddressStructure = rule { "((" ~ OptionalQuotedText ~ OptionalQuotedText ~ QuotedText ~ QuotedText ~ "))" ~> decodeAddress _ }
   
   def OptionalQuotedText = rule { ("NIL" ~ push(None)) | (QuotedText ~> ((x: String) => Some(x))) }
   def QuotedText = rule { '"' ~ capture(oneOrMore(noneOf("\""))) ~ '"' ~ WS }
+
+  def decodeAddress(personalName: Option[String], sourceRoute: Option[String], mailboxName: String, hostName: String): Address = {
+    Address(
+      personalName map MimeUtility.decodeText,
+      sourceRoute map MimeUtility.decodeText,
+      MimeUtility decodeText mailboxName,
+      MimeUtility decodeText hostName
+    )
+  }
 }
 
 trait WhitespaceRules extends Parser {
