@@ -10,7 +10,7 @@ import javax.mail.internet.MimeUtility
 // https://tools.ietf.org/html/rfc3501#section-7.4.2
 sealed trait EnvelopeStructure
 object EnvelopeStructure {
-  case class Envelope(date: DateTime, subject: String, from: Address, sender: Address, replyTo: Address, to: Address, cc: Option[Address], bcc: Option[Address], inReplyTo: Option[Address], messageId: String) extends EnvelopeStructure
+  case class Envelope(date: Option[DateTime], subject: String, from: Address, sender: Address, replyTo: Address, to: Address, cc: Option[Address], bcc: Option[Address], inReplyTo: Option[Address], messageId: String) extends EnvelopeStructure
 
   case class Address(personalName: Option[String], sourceRoute: Option[String], mailboxName: String, hostName: String) extends EnvelopeStructure
 }
@@ -19,7 +19,7 @@ class EnvelopeParser(val input: ParserInput) extends Parser with WhitespaceRules
   import EnvelopeStructure._
 
   def EnvelopeInput = rule {
-    Date ~
+    optional(Date) ~
     Subject ~
     AddressStructure.named("From") ~
     AddressStructure.named("Sender") ~
