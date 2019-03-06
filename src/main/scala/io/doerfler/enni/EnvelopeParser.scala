@@ -21,7 +21,7 @@ class EnvelopeParser(val input: ParserInput) extends Parser with WhitespaceRules
   def EnvelopeInput = rule { Date ~ Subject ~ AddressStructure.named("From") ~ AddressStructure.named("Sender") ~ AddressStructure.named("Reply To") ~ AddressStructure.named("To") ~ OptionalAddressStructure.named("Cc") ~ OptionalAddressStructure.named("Bcc") ~> (Envelope(_, _, _, _, _, _, _, _, "inReplyTo", "messageId")) }
 
   def Date = rule { QuotedText ~> ((s: String) => new DateTime()) }
-  def Subject = rule { QuotedText }
+  def Subject = rule { QuotedText ~> (MimeUtility.decodeText _) }
 
   def OptionalAddressStructure = rule { ("NIL" ~ push(None)) | (AddressStructure ~> ((x: Address) => Some(x))) }
   def AddressStructure = rule { "((" ~ OptionalQuotedText ~ OptionalQuotedText ~ QuotedText ~ QuotedText ~ "))" ~> decodeAddress _ }
