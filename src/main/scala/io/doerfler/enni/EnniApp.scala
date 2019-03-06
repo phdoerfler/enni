@@ -12,6 +12,8 @@ object EnniApp extends App {
     val res = parser.EnvelopeInput.run().toEither.left.map {
       case e: ParseError => parser.formatError(e, new ErrorFormatter(showTraces = true))
     }
+    println(s)
+    println()
     println(res)
     println("===========================")
   }
