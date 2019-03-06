@@ -25,7 +25,7 @@ class EnvelopeParser(val input: ParserInput) extends Parser with WhitespaceRules
   def AddressStructure = rule { "((" ~ OptionalQuotedText ~ OptionalQuotedText ~ QuotedText ~ QuotedText ~ "))" ~> Address }
   
   def OptionalQuotedText = rule { ("NIL" ~ push(None)) | (QuotedText ~> ((x: String) => Some(x))) }
-  def QuotedText = rule { '"' ~ clearSB() ~ oneOrMore(noneOf("\"")) ~ '"' ~ WS ~ push(sb.toString()) }
+  def QuotedText = rule { '"' ~ capture(oneOrMore(noneOf("\""))) ~ '"' ~ WS }
 }
 
 trait WhitespaceRules extends Parser {
