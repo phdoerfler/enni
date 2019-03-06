@@ -3,6 +3,9 @@ name := "Enni"
 ThisBuild / organization := "io.doerfler"
 ThisBuild / version := "1-SNAPSHOT"
 
+enablePlugins(PackPlugin)
+packMain := Map("enni" -> "io.doerfler.enni.EnniApp")
+
 libraryDependencies += "org.parboiled" %% "parboiled" % "2.1.5"
 libraryDependencies += "joda-time" % "joda-time" % "2.10.1"
 
