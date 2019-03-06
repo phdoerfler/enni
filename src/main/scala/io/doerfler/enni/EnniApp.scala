@@ -4,6 +4,7 @@ import org.parboiled2._
 
 import scala.io.Source
 import scala.Console.{GREEN, RED, RESET, YELLOW_B, UNDERLINED}
+import EnvelopeStructure._
 
 object EnniApp extends App {
   for {
@@ -11,13 +12,15 @@ object EnniApp extends App {
   } {
     implicit val parser = new EnvelopeParser(s)
     val res = parser.EnvelopeInput.run().toEither.left.map {
-      case e: ParseError => RED + parser.formatError(e, new ErrorFormatter(showTraces = true)) + RESET
+      case e: ParseError => parser.formatError(e, new ErrorFormatter(showTraces = true))
     }
-    if (res.isRight) {
-      println(s)
-      println()
+    res match {
+      case Right(e: Envelope) =>
+        println(e)
+        println()
+      case Left(l) =>
+        println(RED + l + RESET)
     }
-    println(res)
     println("===========================")
   }
 }
