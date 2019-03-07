@@ -17,10 +17,13 @@ class EnniSpec extends Specification with ScalaCheck {
 # IMAP Envelope
 
   A basic envelope can be parsed    $e1
+  An invalid envelope can not be parsed    $e2
 
 """
 
   def e1 = Eval.envelope(""""Wed,  6 Mar 2019 01:43:22 +0000" "=?utf-8?Q?March=20of=20the=20Indies?=" (("=?utf-8?Q?Soraya=20from=20Roll20?=" NIL "soraya" "roll20.net")) (("=?utf-8?Q?Soraya=20from=20Roll20?=" NIL "soraya" "roll20.net")) (("=?utf-8?Q?Soraya=20from=20Roll20?=" NIL "soraya" "roll20.net")) (("=?utf-8?Q?Philipp?=" NIL "philipp.doerfler" "gmx.de")) NIL NIL NIL "<851adce635852cfbbd9086f3e.30e9649b6a.20190306014256.2c034044d8.870ec79d@mail104.atl281.mcsv.net>"""") must beRight
+
+  def e2 = Eval.envelope(""""Thu, 14 Feb 2019 14:33:24 +0100 (CET)" {126}""") must beLeft
 }
 
 object Eval {

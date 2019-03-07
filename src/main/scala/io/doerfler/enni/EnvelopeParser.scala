@@ -33,8 +33,7 @@ class EnvelopeParser(val input: ParserInput) extends Parser with WhitespaceRules
 
   def Date = rule { QuotedText ~> ((s: String) => new DateTime()) }
   def Subject = rule {
-    QuotedText ~> (MimeUtility.decodeText _) |
-    Text ~> (MimeUtility.decodeText _)
+    QuotedText | Text ~> (MimeUtility.decodeText _)
   }
 
   def OptionalAddressStructure = rule { ("NIL" ~ push(None)) | (AddressStructure ~> ((x: Address) => Some(x))) }
@@ -42,7 +41,7 @@ class EnvelopeParser(val input: ParserInput) extends Parser with WhitespaceRules
   
   def OptionalQuotedText = rule { ("NIL" ~ push(None)) | (QuotedText ~> ((x: String) => Some(x))) }
   def QuotedText = rule { '"' ~ capture(oneOrMore(noneOf("\""))) ~ '"' ~ WS }
-  def Text = rule { capture(oneOrMore(WS ~ noneOf("("))) }
+  def Text = rule { capture(noneOf("\"") ~ oneOrMore(WS ~ noneOf("("))) }
 
   def decodeAddress(personalName: Option[String], sourceRoute: Option[String], mailboxName: String, hostName: String): Address = {
     Address(
