@@ -11,7 +11,7 @@ libraryDependencies += "joda-time" % "joda-time" % "2.10.3"
 libraryDependencies += "com.sun.mail" % "jakarta.mail" % "1.6.3"
 
 
-libraryDependencies ++= specs2("4.6.0", Seq("core", "html", "scalacheck"))
+libraryDependencies ++= specs2("4.7.0", Seq("core", "html", "scalacheck"))
 
 def specs2(version: String, features: Seq[String]) =
   features.map(fe => "org.specs2" %% f"specs2-$fe%s" % version % "test")
