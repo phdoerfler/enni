@@ -6,12 +6,12 @@ ThisBuild / version := "1-SNAPSHOT"
 enablePlugins(PackPlugin)
 packMain := Map("enni" -> "io.doerfler.enni.EnniApp")
 
-libraryDependencies += "org.parboiled" %% "parboiled" % "2.2.0"
-libraryDependencies += "joda-time" % "joda-time" % "2.10.6"
+libraryDependencies += "org.parboiled" %% "parboiled" % "2.2.1"
+libraryDependencies += "joda-time" % "joda-time" % "2.10.5"
 libraryDependencies += "com.sun.mail" % "jakarta.mail" % "1.6.5"
 
 
-libraryDependencies ++= specs2("4.9.3", Seq("core", "html", "scalacheck"))
+libraryDependencies ++= specs2("4.10.3", Seq("core", "html", "scalacheck"))
 
 def specs2(version: String, features: Seq[String]) =
   features.map(fe => "org.specs2" %% f"specs2-$fe%s" % version % "test")
