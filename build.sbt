@@ -19,7 +19,7 @@ def specs2(version: String, features: Seq[String]) =
 scalacOptions in Test += "-Yrangepos" // specs2
 
 scalacOptions += "-Ypartial-unification" // cats
-libraryDependencies += "org.typelevel" %% "cats-core" % "2.6.0"
+libraryDependencies += "org.typelevel" %% "cats-core" % "2.6.1"
 
 
 
