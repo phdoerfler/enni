@@ -6,7 +6,7 @@ ThisBuild / version := "1-SNAPSHOT"
 enablePlugins(PackPlugin)
 packMain := Map("enni" -> "io.doerfler.enni.EnniApp")
 
-libraryDependencies += "org.parboiled" %% "parboiled" % "2.4.0"
+libraryDependencies += "org.parboiled" %% "parboiled" % "2.4.1"
 libraryDependencies += "joda-time" % "joda-time" % "2.12.0"
 libraryDependencies += "com.sun.mail" % "jakarta.mail" % "2.0.1"
 
