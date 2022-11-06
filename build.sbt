@@ -7,11 +7,11 @@ enablePlugins(PackPlugin)
 packMain := Map("enni" -> "io.doerfler.enni.EnniApp")
 
 libraryDependencies += "org.parboiled" %% "parboiled" % "2.4.0"
-libraryDependencies += "joda-time" % "joda-time" % "2.12.0"
+libraryDependencies += "joda-time" % "joda-time" % "2.12.1"
 libraryDependencies += "com.sun.mail" % "jakarta.mail" % "2.0.1"
 
 
-libraryDependencies ++= specs2("4.17.0", Seq("core", "html", "scalacheck"))
+libraryDependencies ++= specs2("4.18.0", Seq("core", "html", "scalacheck"))
 
 def specs2(version: String, features: Seq[String]) =
   features.map(fe => "org.specs2" %% f"specs2-$fe%s" % version % "test")
