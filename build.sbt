@@ -7,7 +7,7 @@ enablePlugins(PackPlugin)
 packMain := Map("enni" -> "io.doerfler.enni.EnniApp")
 
 libraryDependencies += "org.parboiled" %% "parboiled" % "2.5.1"
-libraryDependencies += "joda-time" % "joda-time" % "2.13.0"
+libraryDependencies += "joda-time" % "joda-time" % "2.13.1"
 libraryDependencies += "com.sun.mail" % "jakarta.mail" % "2.0.1"
 
 
