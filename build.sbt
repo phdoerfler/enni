@@ -8,7 +8,7 @@ packMain := Map("enni" -> "io.doerfler.enni.EnniApp")
 
 libraryDependencies += "org.parboiled" %% "parboiled" % "2.5.1"
 libraryDependencies += "joda-time" % "joda-time" % "2.14.0"
-libraryDependencies += "com.sun.mail" % "jakarta.mail" % "2.0.1"
+libraryDependencies += "com.sun.mail" % "jakarta.mail" % "2.0.2"
 
 
 libraryDependencies ++= specs2("4.21.0", Seq("core", "html", "scalacheck"))
